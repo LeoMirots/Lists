@@ -7,6 +7,11 @@ bool cmp(element a, element b)
 	return false;
 }
 
+int DeleteElement(element e)
+{
+	return EXIT_SUCCESS;
+}
+
 void PrintElement(element e)
 {
 	printf("%u;", e);
@@ -87,6 +92,45 @@ list search(element e, list l)
 	return NULL; //In teoria qui non ci dovrebbe mai arrivare;
 }
 
+list search_and_destroy(element e, list l)
+{
+	if (l == NULL)
+		return NULL;
+	if (detect(e, l) == false)
+		return l;
+	list tmp = l;
+	int ctrl;
+	if (cmp(l->value, e) == true)
+	{
+		ctrl = DeleteElement(l->value);
+		if (ctrl == 1)
+		{
+			printf("Errore nella cancellazione del dato;\n");
+			abort();
+		}
+		tmp = l->next;
+		free(l);
+		return tmp;
+	}
+	l->next = search_and_destroy(e, tail(l));
+	return l;
+}
+
+list copy(list l)
+{
+	if (l == NULL)
+		return NULL;
+	size_t size = llenght(l);
+	list c = cons(l->value);
+	l = tail(l);
+	for (size_t i = 1; i < size; ++i)
+	{
+		c = insert(l->value, c);
+		l = tail(l);
+	}
+	return c;
+}
+
 list intersect(list l1, list l2)
 {
 	list i = empty_list();
@@ -121,6 +165,23 @@ list intersect(list l1, list l2)
 	return i;
 }
 
+list difference(list l1, list l2)
+{
+	if (l1 == NULL)
+		return NULL;
+	list diff = copy(l1);
+	if (l2 == NULL)
+		return diff;
+	while(llenght(l2) != 0)
+	{
+		if (detect(l2->value, l1) == true)
+			for (size_t c = 0; c < llenght(l1); ++c)
+				diff = search_and_destroy(l2->value, diff);
+		l2 = tail(l2);
+	}
+	return diff;
+}
+
 int PrintList(list l)
 {
 	if (l == NULL)
@@ -137,3 +198,5 @@ int PrintList(list l)
 	printf("Elementi terminati;\n");
 	return EXIT_SUCCESS;
 }
+
+/* La funzione copy ritorna una lista invertita, da correggere;*/

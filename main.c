@@ -61,6 +61,11 @@ int main(void)
 			l2 = insert(v[i], l2);
 	free(z);
 	list l3 = intersect(l1, l2);
+	list l4 = difference(l1, l2);
 	PrintList(l3);
+	PrintList(l4);
+
+	l1 = search_and_destroy(3, l1);
+	l2 = search_and_destroy(4, l2);
 	return EXIT_SUCCESS;
 }
