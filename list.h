@@ -15,7 +15,10 @@
 
 #define element unsigned int							/*Definizione del tipo di dato degli elementi;*/
 
-typedef struct list_element { 
+/*Un oggetto contiene un elemento, l'indirizzo
+dell'elemento succssivo (l->next) e l'indirizzo
+del primo elemento(l->root) della lista*/
+typedef struct list_element {							
 	element value;
 	struct list_element *next;
 	struct list_element *root;

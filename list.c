@@ -49,6 +49,12 @@ list insert(element e, list l)
 {
 	list l1 = cons(e);
 	l1->next = l;
+	while (l->next != NULL)
+	{
+		l->root = l1;
+		l = tail(l);
+	}
+	l->root = l1;
 	return l1;
 }
 
