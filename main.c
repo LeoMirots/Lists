@@ -29,7 +29,7 @@ int main(void)
 	}
 	if (size1 > 1)
 		for (size_t i = 1; i < size1; ++i)
-			l1 = insert(v[i], l1);
+			l1 = AppendElement(v[i], l1);
 	free(v);
 
 	size_t size2 = 0;
@@ -58,12 +58,16 @@ int main(void)
 	}
 	if (size2 > 1)
 		for (size_t i = 1; i < size2; ++i)
-			l2 = insert(v[i], l2);
+			l2 = AppendElement(v[i], l2);
 	free(z);
+	//list testappend = append(l1, l2);
+	//PrintList(testappend);
+	//list testcopy = copy(l2);
+	//PrintList(testcopy);
 	list l3 = intersect(l1, l2);
-	list l4 = difference(l1, l2);
+	//list l4 = difference(l1, l2);
 	PrintList(l3);
-	PrintList(l4);
+	//PrintList(l4);
 
 	l1 = search_and_destroy(3, l1);
 	l2 = search_and_destroy(4, l2);

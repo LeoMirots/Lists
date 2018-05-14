@@ -17,6 +17,18 @@ void PrintElement(element e)
 	printf("%u;", e);
 }
 
+list AppendElement(element e, list l)
+{
+	if (l == NULL)
+		return cons(e);
+	while (l->next != NULL)
+		l = tail(l);
+	list c = cons(e);
+	c->root = l->root;
+	l->next = c;
+	return l->root;
+}
+
 size_t llenght(list l)
 {
 	if (empty(l) == true)
@@ -39,6 +51,11 @@ list cons(element e)
 	return l;
 }
 
+element head(list l)
+{
+	return l->value;
+}
+
 list tail(list l)
 {
 	l = l->next;
@@ -49,6 +66,8 @@ list insert(element e, list l)
 {
 	list l1 = cons(e);
 	l1->next = l;
+	if (l == NULL)
+		return l1;
 	while (l->next != NULL)
 	{
 		l->root = l1;
@@ -124,7 +143,8 @@ list search_and_destroy(element e, list l)
 
 list copy(list l)
 {
-	if (l == NULL)
+	list c = empty_list();
+	/*if (l == NULL)
 		return NULL;
 	size_t size = llenght(l);
 	list c = cons(l->value);
@@ -133,8 +153,28 @@ list copy(list l)
 	{
 		c = insert(l->value, c);
 		l = tail(l);
+	}*/
+	while (l != NULL) 
+	{
+		c = AppendElement(head(l), c);
+		l = tail(l);
 	}
 	return c;
+}
+
+list append(list l1, list l2)
+{
+	while (l1->next != NULL)
+	{
+		l1 = tail(l1);
+	}
+	l1->next = l2;
+	while (l2 != NULL)
+	{
+		l2->root = l1->root;
+		l2 = tail(l2);
+	}
+	return l1->root;
 }
 
 list intersect(list l1, list l2)
@@ -204,5 +244,3 @@ int PrintList(list l)
 	printf("Elementi terminati;\n");
 	return EXIT_SUCCESS;
 }
-
-/* La funzione copy ritorna una lista invertita, da correggere;*/
