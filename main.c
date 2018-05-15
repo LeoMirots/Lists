@@ -10,7 +10,7 @@ int main(void)
 	{
 		printf("Inserire il %u* numero positivo della prima lista, terminare inserendo 0:\n", (size1 + 1));
 		v = realloc(v, sizeof(unsigned int) * (i + 1));
-	s:		ctrl = scanf(" %u", &v[i]);
+	s:	ctrl = scanf(" %u", &v[i]);
 		if (ctrl != 1)
 		{
 			printf("Errore nell'inserimento del numero, riprovare;\n");
@@ -60,14 +60,14 @@ int main(void)
 		for (size_t i = 1; i < size2; ++i)
 			l2 = AppendElement(v[i], l2);
 	free(z);
-	//list testappend = append(l1, l2);
-	//PrintList(testappend);
-	//list testcopy = copy(l2);
-	//PrintList(testcopy);
+	list testappend = append(l1, l2);
+	PrintList(testappend);
+	list testcopy = copy(l2);
+	PrintList(testcopy);
 	list l3 = intersect(l1, l2);
-	//list l4 = difference(l1, l2);
+	list l4 = difference(l1, l2);
 	PrintList(l3);
-	//PrintList(l4);
+	PrintList(l4);
 
 	l1 = search_and_destroy(3, l1);
 	l2 = search_and_destroy(4, l2);

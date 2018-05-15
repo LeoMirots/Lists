@@ -41,8 +41,10 @@ extern bool empty(list l);								/*Ritorna true se la lista passata come parame
 extern bool detect(element e, list l);					/*Ritorna true se l'elemento e è presente nella lista l, altrimenti ritorna false;*/
 extern list search(element e, list l);					/*Se l'elemento e è presente nella lista l, ritorna un puntatore a quell'oggetto, altrimenti ritorna NULL;*/
 extern list search_and_destroy(element e, list l);		/*Cerca nella lista la prima occorrenza dell'elemento passato come input e lo cancella, ritorna la lista passata come parametro con l'elemento eliminato*/
+extern list SetRoot(list NewRoot, list l);				/*Imposta l->root di ogni elemento della lista a NewRoot e ritorna la lista dal punto di partenza;*/
 extern list copy(list l);								/*Ritorna una copia della lista passata come parametro*/
-extern list append(list l1, list l2);
+extern list append(list l1, list l2);					/*Ritorna la lista 1 unita alla lista 2;*/
+extern list NoRepetition(list l);						/*Ritorna la lista senza elementi ripetuti;*/
 extern list intersect(list l1, list l2);				/*Ritorna una lista che contiene gli elementi in comune tra le liste l1 e l2 passate come parametri, se non ci sono elementi in comune viene ritornata una lista vuota(NULL);*/
 extern list difference(list l1, list l2);				/*Ritorna una lista uguale a l1, che però non contiene gli elementi che l1 ha in comune con l2*/
 extern int PrintList(list l);							/*Stampa tutti gli elementi della lista, ritorna 0 in caso di successo, 1 nel caso contrario;*/

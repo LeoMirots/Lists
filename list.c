@@ -91,14 +91,12 @@ bool empty(list l)
 
 bool detect(element e, list l)
 {
-	while (l->next != NULL)
+	while (empty(l) == false)
 	{
-		if (cmp(e, l[0].value) == true)
+		if (cmp(e, l->value) == true)
 			return true;
 		l = tail(l);
 	}
-	if (cmp(e, l[0].value) == true)
-		return true;
 	return false;
 }
 
@@ -127,33 +125,50 @@ list search_and_destroy(element e, list l)
 	int ctrl;
 	if (cmp(l->value, e) == true)
 	{
-		ctrl = DeleteElement(l->value);
+		l = l->next;
+		ctrl = DeleteElement(tmp->value);
 		if (ctrl == 1)
 		{
-			printf("Errore nella cancellazione del dato;\n");
+			printf("Errore cancellazione elemento;\n");
 			abort();
 		}
-		tmp = l->next;
-		free(l);
-		return tmp;
+		SetRoot(l, l);
+		free(tmp);
+		return l;
 	}
-	l->next = search_and_destroy(e, tail(l));
-	return l;
+	while (llenght(l) != 1)
+	{
+		if (cmp(l->next->value, e) == true)
+		{
+			ctrl = DeleteElement(l->next->value);
+			if (ctrl == 1)
+			{
+				printf("Errore nella cancellazione del file;\n");
+				abort();
+			}
+			tmp = l->next;
+			l->next = l->next->next;
+			free(tmp);
+			return l->root;
+		}
+		l = tail(l);
+	}
+	return NULL;
+}
+
+list SetRoot(list NewRoot, list l)
+{
+	while (llenght(l) != 0)
+	{
+		l->root = NewRoot;
+		l = tail(l);
+	}
+	return NewRoot;
 }
 
 list copy(list l)
 {
 	list c = empty_list();
-	/*if (l == NULL)
-		return NULL;
-	size_t size = llenght(l);
-	list c = cons(l->value);
-	l = tail(l);
-	for (size_t i = 1; i < size; ++i)
-	{
-		c = insert(l->value, c);
-		l = tail(l);
-	}*/
 	while (l != NULL) 
 	{
 		c = AppendElement(head(l), c);
@@ -177,6 +192,22 @@ list append(list l1, list l2)
 	return l1->root;
 }
 
+list NoRepetition(list l)
+{
+	while (l->next != NULL)
+	{
+		if (detect(l->value, l) == true)
+		{
+			if (detect(l->value, tail(l)))
+			{
+				l = search_and_destroy(l->value, l);	
+			}
+		}
+		l = tail(l);
+	}
+	return l->root;
+}
+
 list intersect(list l1, list l2)
 {
 	list i = empty_list();
@@ -184,7 +215,7 @@ list intersect(list l1, list l2)
 	if (l1 == NULL || l2 == NULL)
 		return NULL;
 
-	while (l1->next != NULL)
+	while (empty(l1) == false)
 	{
 		if (detect(l1->value, l2) == true)
 		{
@@ -198,16 +229,7 @@ list intersect(list l1, list l2)
 		}
 		l1 = tail(l1);
 	}
-	if (detect(l1->value, l2) == true)
-	{
-		if (ctrl == false)
-		{
-			i = cons(l1->value);
-			ctrl = true;
-		}
-		else
-			i = insert(l1->value, i);
-	}
+	i = NoRepetition(i);
 	return i;
 }
 
