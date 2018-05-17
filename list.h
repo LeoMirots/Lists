@@ -25,6 +25,7 @@ typedef struct list_element {
 } item;
 	
 typedef item* list;
+extern void AssignElement(element *dst, element src);	/*Funzione di assegnamento tra 2 elementi, copia l'elemento src nell'elemento puntato da dst;*/
 extern void PrintElement(element e);					/*Funzione di stampa di un elemento, il parametro è l'elemento da stampare;*/
 extern bool cmp(element a, element b);					/*Funzione di confronto tra elementi, riceve due elementi come parametro e ritorna true se sono uguali e false nel caso contrario;*/
 extern int DeleteElement(element e);					/*Funzione di cancellazione del dato, occorre modificarla se si cambia il tipo di dato, ritorna 0 se ha successo, 1 nel caso contrario;*/

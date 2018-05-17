@@ -7,6 +7,11 @@ bool cmp(element a, element b)
 	return false;
 }
 
+void AssignElement(element *dst, element src)
+{
+	*dst = src;
+}
+
 int DeleteElement(element e)
 {
 	return EXIT_SUCCESS;
@@ -28,6 +33,7 @@ list AppendElement(element e, list l)
 	l->next = c;
 	return l->root;
 }
+/*---------------------Da qui in poi non modificare--------------------------------------*/
 
 size_t llenght(list l)
 {
@@ -45,7 +51,7 @@ size_t llenght(list l)
 list cons(element e)
 {
 	list l = malloc(sizeof(item));
-	l->value = e;
+	AssignElement(&l->value, e);
 	l->next = NULL;
 	l->root = l;
 	return l;
