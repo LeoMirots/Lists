@@ -114,7 +114,7 @@ list search(element e, list l)
 	{
 		if (cmp(e, l->value) == true)
 			return l;
-		tail(l);
+		l = tail(l);
 	}
 	if (cmp(e, l->value) == true)
 		return l;
@@ -175,7 +175,7 @@ list SetRoot(list NewRoot, list l)
 list copy(list l)
 {
 	list c = empty_list();
-	while (l != NULL) 
+	while (l != NULL)
 	{
 		c = AppendElement(head(l), c);
 		l = tail(l);
@@ -206,7 +206,7 @@ list NoRepetition(list l)
 		{
 			if (detect(l->value, tail(l)))
 			{
-				l = search_and_destroy(l->value, l);	
+				l = search_and_destroy(l->value, l);
 			}
 		}
 		l = tail(l);
