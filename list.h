@@ -31,6 +31,8 @@ extern bool cmp(element a, element b);					/*Funzione di confronto tra elementi,
 extern int DeleteElement(element e);					/*Funzione di cancellazione del dato, occorre modificarla se si cambia il tipo di dato, ritorna 0 se ha successo, 1 nel caso contrario;*/
 extern list AppendElement(element e, list l);			/*Ritorna una lista con aggiunto l'elemento e alla fine;*/
 
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
 extern size_t llenght(list l);							/*Riceve come parametro una lista e ritorna il numero di elementi della lista;*/
 extern list cons(element e);							/*Crea una nuova lista inserendo al primo elemento il parametro e, ritorna la lista creata;*/
 extern list insert(element e, list l);					/*Inserisce un nuovo elemento e in una lista l, se la lista o inesistente viene creata, ritorna la lista aggiornata;*/
