@@ -1,6 +1,6 @@
 #include "list.h"
 
-bool cmp(element a, element b)
+bool IsEqual(element a, element b)
 {
 	if (a == b)
 		return true;
@@ -99,7 +99,7 @@ bool detect(element e, list l)
 {
 	while (empty(l) == false)
 	{
-		if (cmp(e, l->value) == true)
+		if (IsEqual(e, l->value) == true)
 			return true;
 		l = tail(l);
 	}
@@ -112,11 +112,11 @@ list search(element e, list l)
 		return NULL;
 	while (l->next != NULL)
 	{
-		if (cmp(e, l->value) == true)
+		if (IsEqual(e, l->value) == true)
 			return l;
 		l = tail(l);
 	}
-	if (cmp(e, l->value) == true)
+	if (IsEqual(e, l->value) == true)
 		return l;
 	return NULL; //In teoria qui non ci dovrebbe mai arrivare;
 }
@@ -129,7 +129,7 @@ list search_and_destroy(element e, list l)
 		return l;
 	list tmp = l;
 	int ctrl;
-	if (cmp(l->value, e) == true)
+	if (IsEqual(l->value, e) == true)
 	{
 		l = l->next;
 		ctrl = DeleteElement(tmp->value);
@@ -144,7 +144,7 @@ list search_and_destroy(element e, list l)
 	}
 	while (llenght(l) != 1)
 	{
-		if (cmp(l->next->value, e) == true)
+		if (IsEqual(l->next->value, e) == true)
 		{
 			ctrl = DeleteElement(l->next->value);
 			if (ctrl == 1)

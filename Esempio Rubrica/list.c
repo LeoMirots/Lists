@@ -1,13 +1,13 @@
 #include "list.h"
 
-bool cmp(element a, element b)
+bool IsEqual(element a, element b)
 {
 	if (a.nome == b.nome)
 		if(a.numero == b.numero)
 			return true;
-	if (strcmp(a.numero, b.numero) == 0)
+	if (strIsEqual(a.numero, b.numero) == 0)
 		return true;
-	if (strcmp(a.nome, b.nome) == 0)
+	if (strIsEqual(a.nome, b.nome) == 0)
 		return true;
 	return false;
 }
@@ -106,7 +106,7 @@ bool detect(element e, list l)
 {
 	while (empty(l) == false)
 	{
-		if (cmp(e, l->value) == true)
+		if (IsEqual(e, l->value) == true)
 			return true;
 		l = tail(l);
 	}
@@ -119,11 +119,11 @@ list search(element e, list l)
 		return NULL;
 	while (l->next != NULL)
 	{
-		if (cmp(e, l->value) == true)
+		if (IsEqual(e, l->value) == true)
 			return l;
 		l = tail(l);
 	}
-	if (cmp(e, l->value) == true)
+	if (IsEqual(e, l->value) == true)
 		return l;
 	return NULL; //In teoria qui non ci dovrebbe mai arrivare;
 }
@@ -159,7 +159,7 @@ list search_and_destroy(element e, list l)
 		return l;
 	list tmp = l;
 	int ctrl;
-	if (cmp(l->value, e) == true)
+	if (IsEqual(l->value, e) == true)
 	{
 		l = l->next;
 		ctrl = DeleteElement(tmp->value);
@@ -174,7 +174,7 @@ list search_and_destroy(element e, list l)
 	}
 	while (llenght(l) != 1)
 	{
-		if (cmp(l->next->value, e) == true)
+		if (IsEqual(l->next->value, e) == true)
 		{
 			ctrl = DeleteElement(l->next->value);
 			if (ctrl == 1)
@@ -205,7 +205,7 @@ list SetRoot(list NewRoot, list l)
 list copy(list l)
 {
 	list c = empty_list();
-	while (l != NULL) 
+	while (l != NULL)
 	{
 		c = AppendElement(head(l), c);
 		l = tail(l);
@@ -236,7 +236,7 @@ list NoRepetition(list l)
 		{
 			if (detect(l->value, tail(l)))
 			{
-				l = search_and_destroy(l->value, l);	
+				l = search_and_destroy(l->value, l);
 			}
 		}
 		l = tail(l);
