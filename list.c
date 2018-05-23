@@ -7,6 +7,15 @@ bool IsEqual(element a, element b)
 	return false;
 }
 
+int cmp(element a, element b)
+{
+	if(a == b)
+		return 0;
+	if(a < b)
+		return -1;
+	return 1;
+}
+
 void AssignElement(element *dst, element src)
 {
 	*dst = src;
