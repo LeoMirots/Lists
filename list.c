@@ -221,6 +221,40 @@ list difference(list l1, list l2)
 	return diff;
 }
 
+void bubble_sort(list l)
+{
+	int swapped;
+	list ptr1;
+	list lptr = NULL;
+	if (l == NULL)
+		return;
+	do
+	{
+		swapped = 0;
+		ptr1 = l;
+
+		while (ptr1->next != lptr)
+		{
+			if (cmp(ptr1->value, ptr1->next->value) == 1)
+			{
+				swap(ptr1, ptr1->next);
+				swapped = 1;
+			}
+			ptr1 = ptr1->next;
+		}
+		lptr = ptr1;
+	} while (swapped);
+}
+
+/* function to swap data of two nodes a and b*/
+void swap(list a, list b) // va miglioratore
+{
+	element tmp;
+	memcpy(&tmp, &(a->value), sizeof(element));
+	memcpy(&(a->value), &(b->value), sizeof(element));
+	memcpy(&(b->value), &tmp, sizeof(element));
+}
+
 int PrintList(list l)
 {
 	if (l == NULL)
@@ -620,7 +654,7 @@ list3 SetRoot3(list3 NewRoot, list3 l)
 list3 copy3(list3 l)
 {
 	list3 c = empty_list3();
-	while (l != NULL) 
+	while (l != NULL)
 	{
 		c = AppendElement3(head3(l), c);
 		l = tail3(l);
@@ -651,7 +685,7 @@ list3 NoRepetition3(list3 l)
 		{
 			if (detect3(l->value, tail3(l)))
 			{
-				l = search_and_destroy3(l->value, l);	
+				l = search_and_destroy3(l->value, l);
 			}
 		}
 		l = tail3(l);
