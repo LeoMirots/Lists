@@ -127,6 +127,38 @@ list search_and_destroy(element e, list l)
 	return NULL;
 }
 
+list DelFirst(list l)
+{
+	list r = l->root;
+	SetRoot(r->next, r);
+	DeleteElement(head(r));
+	free(r);
+	return l->root;
+}
+
+list Del(list l)
+{
+	list tmp = l->next;
+	if (l == l->root)
+		SetRoot(l->next, l);
+	else {
+		list r = l->root;
+		size_t list_size = llenght(r);
+		for (size_t i = 0; i < list_size; ++i)
+		{
+			if (tail(r) == l)
+			{
+				r->next = l->next;
+				break;
+			}
+			r = tail(r);
+		}
+	}
+	DeleteElement(head(l));
+	free(l);
+	return tmp;
+}
+
 list SetRoot(list NewRoot, list l)
 {
 	while (llenght(l) != 0)
@@ -401,6 +433,38 @@ list2 search_and_destroy2(element2 e, list2 l)
 	return NULL;
 }
 
+list2 DelFirst2(list2 l)
+{
+	list2 r = l->root;
+	SetRoot2(r->next, r);
+	DeleteElement2(head2(r));
+	free(r);
+	return l->root;
+}
+
+list2 Del2(list2 l)
+{
+	list2 tmp = l->next;
+	if (l == l->root)
+		SetRoot2(l->next, l);
+	else {
+		list2 r = l->root;
+		size_t list_size = llenght2(r);
+		for (size_t i = 0; i < list_size; ++i)
+		{
+			if (tail2(r) == l)
+			{
+				r->next = l->next;
+				break;
+			}
+			r = tail2(r);
+		}
+	}
+	DeleteElement2(head2(l));
+	free(l);
+	return tmp;
+}
+
 list2 SetRoot2(list2 NewRoot, list2 l)
 {
 	while (llenght2(l) != 0)
@@ -641,6 +705,39 @@ list3 search_and_destroy3(element3 e, list3 l)
 	return NULL;
 }
 
+list3 DelFirst3(list3 l)
+{
+	list3 r = l->root;
+	SetRoot3(r->next, r);
+	DeleteElement3(head3(r));
+	free(r);
+	return l->root;
+}
+
+list3 Del3(list3 l)
+{
+	list3 tmp = l->next;
+	if (l == l->root)
+		SetRoot3(l->next, l);
+	else {
+		list3 r = l->root;
+		size_t list_size = llenght3(r);
+		for (size_t i = 0; i < list_size; ++i)
+		{
+			if (tail3(r) == l)
+			{
+				r->next = l->next;
+				break;
+			}
+			r = tail3(r);
+		}
+	}
+	DeleteElement3(head3(l));
+	free(l);
+	return tmp;
+}
+
+
 list3 SetRoot3(list3 NewRoot, list3 l)
 {
 	while (llenght3(l) != 0)
@@ -654,7 +751,7 @@ list3 SetRoot3(list3 NewRoot, list3 l)
 list3 copy3(list3 l)
 {
 	list3 c = empty_list3();
-	while (l != NULL)
+	while (l != NULL) 
 	{
 		c = AppendElement3(head3(l), c);
 		l = tail3(l);
@@ -685,7 +782,7 @@ list3 NoRepetition3(list3 l)
 		{
 			if (detect3(l->value, tail3(l)))
 			{
-				l = search_and_destroy3(l->value, l);
+				l = search_and_destroy3(l->value, l);	
 			}
 		}
 		l = tail3(l);
