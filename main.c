@@ -21,7 +21,8 @@ int main(void)
 			break;
 	}
 	--size1;
-	list l1 = cons(v[0]);
+	element x = build_element(&v[0], uint_element);
+	list l1 = cons(x);
 	if (l1 == NULL)
 	{
 		printf("Ci sono stati dei problemi nel creare la lista;\n");
@@ -29,47 +30,37 @@ int main(void)
 	}
 	if (size1 > 1)
 		for (size_t i = 1; i < size1; ++i)
-			l1 = AppendElement(v[i], l1);
-	free(v);
-
-	size_t size2 = 0;
-	unsigned int *z = malloc(sizeof(unsigned int));
-	ctrl = 0;
-	for (size_t i = 0; 1; ++i)
-	{
-		printf("Inserire il %u* numero positivo della seconda lista, terminare inserendo 0:\n", (size2 + 1));
-		z = realloc(z, sizeof(unsigned int) * (i + 1));
-	t:		ctrl = scanf(" %u", &z[i]);
-		if (ctrl != 1)
 		{
-			printf("Errore nell'inserimento del numero, riprovare;\n");
-			goto t;
+			x.value = &v[i];
+			l1 = AppendElement(x, l1);
 		}
-		++size2;
-		if (z[i] == 0)
-			break;
-	}
-	--size2;
-	list l2 = cons(z[0]);
-	if (l2 == NULL)
-	{
-		printf("Ci sono stati dei problemi nel creare la lista;\n");
-		return EXIT_FAILURE;
-	}
-	if (size2 > 1)
-		for (size_t i = 1; i < size2; ++i)
-			l2 = AppendElement(v[i], l2);
-	free(z);
-	list testappend = append(l1, l2);
-	PrintList(testappend);
-	list testcopy = copy(l2);
-	PrintList(testcopy);
-	list l3 = intersect(l1, l2);
-	list l4 = difference(l1, l2);
-	PrintList(l3);
-	PrintList(l4);
+	DeleteElement(x);
 
-	l1 = search_and_destroy(3, l1);
-	l2 = search_and_destroy(4, l2);
+	PrintList(l1);
+	unsigned int n = 5;
+	element t = build_element(&n, uint_element);
+	item *z = search(t, l1);
+	PrintElement(z->value);
+	search_and_destroy(t, l1);
+	DeleteElement(t);
+	
+	n = 4;
+	element t1 = build_element(&n, uint_element);
+	bool test = detect(t1, l1);
+	item *toErase = search(t1, l1);
+	Del(toErase);
+	PrintList(l1);
+	
+
+	l1 = insert(t1, l1);
+	DeleteElement(t1);
+	PrintList(l1);
+	element h = head(l1);
+	PrintElement(h);
+	l1 = NoRepetition(l1);
+	PrintList(l1);
+	PrintElement(MaxValue(l1));
+	PrintElement(MinValue(l1));
+	
 	return EXIT_SUCCESS;
 }
