@@ -104,17 +104,18 @@ void AssignElement(element *dst, element src)
 	if (src.type == string_element)
 	{
 		dst->type = string_element;
-		strcpy(dst->value.s, src.value.s);
+		strcpy(((string *)dst->value)->s, ((string *)src.value)->s);
 		return;
 	}
 
 	if (src.type == persona_element)
 	{
 		dst->type = persona_element;
-		strcpy(dst->value.nome, src.value.nome);
-		strcpy(dst->value.CF, src.value.CF);
-		strcpy(dst->value.referto, src.value.referto);
-		dst->value.CodiceAccesso = src.value.CodiceAccesso;
+		strcpy(((Persona *)dst->value)->Nome, ((Persona *)src.value)->Nome);
+		strcpy(((Persona *)dst->value)->Cognome, ((Persona *)src.value)->Cognome);
+		strcpy(((Persona *)dst->value)->CF, ((Persona *)src.value)->CF);
+		strcpy(((Persona *)dst->value)->Referto, ((Persona *)src.value)->Referto);
+		((Persona *)dst->value)->CodiceAccesso = ((Persona *)src.value)->CodiceAccesso;
 		return;
 	}
 
@@ -168,6 +169,7 @@ void PrintElement(element e)
 		break;
 	case persona_element:
 		printf("Nome: %s\n", ((Persona*)e.value)->Nome);
+		printf("Cognome: %s\n", ((Persona *)e.value)->Cognome);
 		printf("CF: %s\n", ((Persona*)e.value)->CF);
 		printf("Referto: %s\n", ((Persona*)e.value)->Referto);
 		printf("Codice Accesso: %d\n", ((Persona*)e.value)->CodiceAccesso);
@@ -204,11 +206,12 @@ void str_del(string str)
 	free(str.s);
 }
 
-Persona build_persona(char* nome, char* cf, char* referto, int codiceAccesso)
+Persona build_persona(char* nome, char *cognome, char* cf, char* referto, int codiceAccesso)
 {
 	Persona p;
 	strcpy(p.CF, cf);
 	strcpy(p.Nome, nome);
+	strcpy(p.Cognome, cognome);
 	strcpy(p.Referto, referto);
 	p.CodiceAccesso = codiceAccesso;
 	return p;
@@ -217,6 +220,6 @@ Persona build_persona(char* nome, char* cf, char* referto, int codiceAccesso)
 Persona* persona_copy(void* p)
 {
 	Persona* pout = malloc(sizeof(Persona));
-	*pout = build_persona(((Persona*)p)->Nome, ((Persona*)p)->CF, ((Persona*)p)->Referto, ((Persona*)p)->CodiceAccesso);
+	*pout = build_persona(((Persona*)p)->Nome, ((Persona *)p)->Cognome, ((Persona*)p)->CF, ((Persona*)p)->Referto, ((Persona*)p)->CodiceAccesso);
 	return pout;
 }

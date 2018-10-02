@@ -16,7 +16,7 @@ size_t llenght(list l)
 list cons(element e)
 {
 	list l = malloc(sizeof(item));
-	AssignElement(&l->value, e);
+	l->value = build_element(e.value, e.type);
 	l->next = NULL;
 	l->root = l;
 	return l;
@@ -293,4 +293,13 @@ element MinValue(list l)
 		l = tail(l);
 	}
 	return x;
+}
+
+void swap(item *a, item *b)
+{
+	element tmp = build_element(a->value.value, a->value.type);
+	//AssignElement(tmp, a->value);
+	AssignElement(&a->value, b->value);
+	AssignElement(&b->value, tmp);
+	DeleteElement(tmp);
 }

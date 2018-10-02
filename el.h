@@ -35,6 +35,7 @@ typedef struct {
 } string;
 typedef struct {
 	char Nome[20];
+	char Cognome[20];
 	char CF[17];
 	char Referto[100];
 	int CodiceAccesso;
@@ -62,7 +63,7 @@ extern void str_del(string str);
 extern string string_append(char* add_str, string str);
 extern string build_string(char* str_in, size_t len);
 extern string* string_copy(void* str_in);
-extern Persona build_persona(char* nome, char* cf, char* referto, int codiceAccesso);
+extern Persona build_persona(char* nome, char *cognome, char* cf, char* referto, int codiceAccesso);
 extern Persona* persona_copy(void* p);
 
 #endif //EL_H

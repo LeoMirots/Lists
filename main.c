@@ -1,5 +1,9 @@
 #include "list.h"
 
+/*Per il test crea una lista con i primi 10 numeri;*/
+
+/*Nel file.txt delle persone non ci devono essere spazi nella stringa di un campo solo, gli spazi separano i campi;*/
+
 int main(void)
 {
 	int ctrl = 0;
@@ -61,6 +65,31 @@ int main(void)
 	PrintList(l1);
 	PrintElement(MaxValue(l1));
 	PrintElement(MinValue(l1));
+
+	list lp = empty_list();
+	Persona *tmp = malloc(sizeof(Persona));
+	FILE *f = fopen("Persone.txt", "rt");
+	if (f == NULL)
+	{
+		fprintf(stderr, "Errore in apertura del file;\n");
+		return EXIT_FAILURE;
+	}
+	for (int ctrl = 0; ctrl != EOF;)
+	{
+		ctrl = fscanf(f, "%s,", &tmp->Nome);
+		fscanf(f, "%s", &tmp->Cognome);
+		fscanf(f, "%s", &tmp->CF);
+		fscanf(f, "%s", &tmp->Referto);
+		fscanf(f, "%d;\n", &tmp->CodiceAccesso);
+
+		if(ctrl != EOF)
+			lp = AppendElement(build_element(tmp, persona_element), lp);
+	}
+	fclose(f);
+	PrintList(lp);
+	swap(lp, tail(lp));
+	PrintList(lp);
 	
+	system("PAUSE");
 	return EXIT_SUCCESS;
 }

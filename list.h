@@ -40,5 +40,6 @@ extern list difference(list l1, list l2);								/*Ritorna una lista uguale a l1
 extern int PrintList(list l);														/*Stampa tutti gli elementi della lista, ritorna 0 in caso di successo, 1 nel caso contrario;*/
 extern element MaxValue(list l);												/*Ritorna l'elemento dal valore maggiore presente nella lista;*/
 extern element MinValue(list l);												/*Ritorna l'elemento dal valore minore presente nella lista;*/
+extern void swap(item *a, item *b);							/*Scambia gli elementi di 2 container della lista, lasciando la loro posizione invariata;*/
 
 #endif //LIST_H
