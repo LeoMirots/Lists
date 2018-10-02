@@ -101,6 +101,23 @@ int cmp(element *a, element *b)
 
 void AssignElement(element *dst, element src)
 {
+	if (src.type == string_element)
+	{
+		dst->type = string_element;
+		strcpy(dst->value.s, src.value.s);
+		return;
+	}
+
+	if (src.type == persona_element)
+	{
+		dst->type = persona_element;
+		strcpy(dst->value.nome, src.value.nome);
+		strcpy(dst->value.CF, src.value.CF);
+		strcpy(dst->value.referto, src.value.referto);
+		dst->value.CodiceAccesso = src.value.CodiceAccesso;
+		return;
+	}
+
 	dst->value = src.value;
 	dst->type = src.type;
 }
