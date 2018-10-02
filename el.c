@@ -181,18 +181,22 @@ void PrintElement(element e)
 }
 
 
-string* string_copy(void* str_in)
+string* string_copy(void *str_in)
 {
-	string* str_out = malloc(sizeof(string*));
+	string *str_out = malloc(sizeof(string));
 	*str_out = build_string(((string*)str_in)->s, ((string*)str_in)->len);
+	//str_out->s = strcpy(&str_out->s, str_in);
+	//str_out->len = strlen(str_in);
 	return str_out;
 }
 string build_string(char* str_in, size_t len)
 {
 	char* str_out = calloc(len + 1, sizeof(char));
-	str_out = (str_out, str_in);
-	string s = { str_out, len };
-	return s;
+	str_out = strcpy(str_out, str_in);
+	string *st = malloc(sizeof(string));
+	st->s = str_out;
+	st->len = len;
+	return *st;
 }
 string string_append(char* add_str, string str)
 {

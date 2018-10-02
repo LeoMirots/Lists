@@ -6,6 +6,7 @@
 
 int main(void)
 {
+	/*
 	int ctrl = 0;
 	size_t size1 = 0;
 	unsigned int *v = malloc(sizeof(unsigned int));
@@ -65,6 +66,7 @@ int main(void)
 	PrintList(l1);
 	PrintElement(MaxValue(l1));
 	PrintElement(MinValue(l1));
+	*/
 
 	list lp = empty_list();
 	Persona *tmp = malloc(sizeof(Persona));
@@ -83,12 +85,21 @@ int main(void)
 		fscanf(f, "%d;\n", &tmp->CodiceAccesso);
 
 		if(ctrl != EOF)
-			lp = AppendElement(build_element(tmp, persona_element), lp);
+			lp = AppendElement(build_element(tmp, persona_element), lp); //Memory leak in this point;
 	}
 	fclose(f);
 	PrintList(lp);
 	swap(lp, tail(lp));
 	PrintList(lp);
+
+	string *str = malloc(sizeof(string));
+	char x[] = "Ciao";
+	str->s = x;
+	str->len = strlen(str->s);
+	element s = build_element(str, string_element);
+	list ls = cons(s);
+	DeleteElement(s);
+	PrintList(ls);
 	
 	system("PAUSE");
 	return EXIT_SUCCESS;
