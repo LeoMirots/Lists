@@ -6,7 +6,6 @@
 
 int main(void)
 {
-	/*
 	int ctrl = 0;
 	size_t size1 = 0;
 	unsigned int *v = malloc(sizeof(unsigned int));
@@ -48,14 +47,14 @@ int main(void)
 	PrintElement(z->value);
 	search_and_destroy(t, l1);
 	DeleteElement(t);
-	
+
 	n = 4;
 	element t1 = build_element(&n, uint_element);
 	bool test = detect(t1, l1);
 	item *toErase = search(t1, l1);
 	Del(toErase);
 	PrintList(l1);
-	
+
 
 	l1 = insert(t1, l1);
 	DeleteElement(t1);
@@ -66,7 +65,6 @@ int main(void)
 	PrintList(l1);
 	PrintElement(MaxValue(l1));
 	PrintElement(MinValue(l1));
-	*/
 
 	list lp = empty_list();
 	Persona *tmp = malloc(sizeof(Persona));
@@ -85,7 +83,7 @@ int main(void)
 		fscanf(f, "%d;\n", &tmp->CodiceAccesso);
 
 		if(ctrl != EOF)
-			lp = AppendElement(build_element(tmp, persona_element), lp); //Memory leak in this point;
+			lp = AppendElement(build_element(tmp, persona_element), lp); //Memory leak in this point: AppendElement e build_element creano entrambi una copia di tmp, una è superflua e andrebbe eliminata;
 	}
 	fclose(f);
 	PrintList(lp);
@@ -100,7 +98,7 @@ int main(void)
 	list ls = cons(s);
 	DeleteElement(s);
 	PrintList(ls);
-	
+
 	system("PAUSE");
 	return EXIT_SUCCESS;
 }
