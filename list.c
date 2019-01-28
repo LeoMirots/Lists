@@ -87,12 +87,7 @@ list search_and_destroy(element e, list l)
 		return l;
 	list tmp = l;
 	if (IsEqual(head(l), e) == true)
-	{
-		l = tail(l);
-		DeleteElement(tmp->value);
-		free(tmp);
-		return l;
-	}
+		return DelFirst(l);
 	while (llenght(l) != 1)
 	{
 		if (IsEqual(head(tail(l)), e) == true)
@@ -205,15 +200,16 @@ list NoRepetition(list l)
 {
 	list r = l;
 	bool firstEl = true;
-	while (l->next != NULL)
+	while (empty(l) == false)
 	{
 		if (detect(head(l), l) == true)
 		{
 			if (detect(head(l), tail(l)))
-			{
-				l = search_and_destroy(head(l), l);
+			{	
 				if (firstEl == true)
-					r = l;
+					r = DelFirst(l);
+				else
+					l = search_and_destroy(head(l), r);
 			}
 			else
 				firstEl = false;
@@ -351,7 +347,7 @@ void bubble_sort(list l)
 void swap(item *a, item *b)
 {
 	element tmp;
-	tmp.type = b->value.type;
+	tmp.type = a->value.type;
 	AssignElement(&tmp, a->value);
 	AssignElement(&a->value, b->value);
 	AssignElement(&b->value, tmp);
