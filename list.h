@@ -1,4 +1,8 @@
-﻿#if !defined LIST_H
+﻿/*	In this library when cons function operates, it allocates memory for the element, and the element->value,
+	so the memory for the element is allocated only inside the list;
+*/
+
+#if !defined LIST_H
 #define LIST_H
 
 #include "el.h"
@@ -6,6 +10,7 @@
 typedef struct list_element {
 	element value;
 	struct list_element *next;
+	struct list_element *root;
 } item;
 
 typedef item *list;		//a list is a pointer to one memory block of the list;
@@ -17,9 +22,12 @@ extern element head(list l);									/*Ritorna l'elemento in testa alla lista;*/
 extern list tail(list l);										/*Scorre in avanti la lista passata come parametro, ritornando la lista senza l'elemento in testa;*/
 extern list empty_list(void);									/*Crea una lista vuota, non necessita di parametri e ritorna il puntatore alla lista creata;*/
 extern bool empty(list l);										/*Ritorna true se la lista passata come parametro � vuota, altrimenti ritorna false;*/
+extern void SetRoot(list l, item *NewRoot);						/*Imposta il root della lista l con il valore NewRoot*/
 
 extern bool detect(element e, list l);								/*Ritorna true se l'elemento e � presente nella lista l, altrimenti ritorna false;*/
 extern list search(element e, list l);								/*Se l'elemento e � presente nella lista l, ritorna un puntatore a quell'oggetto, altrimenti ritorna NULL;*/
+extern item *last(list l);											/*Ritorna un puntatore all'ultimo elemento della lista;*/
+extern item *prev(list l, item *i);									/*Ritorna l'oggetto precedente dell'oggetto i;*/
 extern list search_and_destroy(element e, list l);					/*Cerca nella lista la prima occorrenza dell'elemento passato come input e lo cancella, ritorna la lista passata come parametro con l'elemento eliminato*/
 extern list DelFirst(list l);										/*Elimina il primo elemento della lista, ritorna un puntatore all' elemento successivo;*/
 extern list Del(list l, item *ToDelete);							/*Elimina il nodo puntato da l verificando che il nodo che lo precede aggiorni il puntatore al prossimo elemento;*/
@@ -36,6 +44,7 @@ extern element MaxValue(list l);									/*Ritorna l'elemento dal valore maggior
 extern element MinValue(list l);									/*Ritorna l'elemento dal valore minore presente nella lista;*/
 extern list insord(element e, list l);								/*Inserisce l'elemento e nella lista l mantenendo l'ordine; */
 extern void bubble_sort(list l);									/*Ordina in verso crescente la lista l;*/
+extern void reverse(list l);										/*Inverte l'ordine degli elementi della lista l;*/
 extern void swap(item *a, item *b);									/*Scambia gli elementi tra due oggetti(items) della lista l;*/
 extern list DeleteAll(list l);										/*Cancella tutta la lista*/
 

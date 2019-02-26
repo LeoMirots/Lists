@@ -19,6 +19,8 @@ list cons(element e)
 	l->value.value = BuildValue(e);
 	l->value.type = e.type;
 	l->next = NULL;
+	l->root = l;
+	
 	return l;
 }
 
@@ -37,6 +39,8 @@ list insert(element e, list l)
 {
 	list l1 = cons(e);
 	l1->next = l;
+	SetRoot(l, l1);
+
 	return l1;
 }
 
@@ -50,6 +54,15 @@ bool empty(list l)
 	if (l == NULL)
 		return true;
 	return false;
+}
+
+void SetRoot(list l, item *NewRoot)
+{
+	while (empty(l) == false)
+	{
+		l->root = NewRoot;
+		l = tail(l);
+	}
 }
 
 bool detect(element e, list l)
@@ -78,6 +91,30 @@ list search(element e, list l)
 	return NULL; //In teoria qui non ci dovrebbe mai arrivare;
 }
 
+item *last(list l)
+{
+	while (empty(tail(l)) != true)
+		l = tail(l);
+	return l;
+}
+
+item *prev(list l, item *i)
+{
+	if (empty(l) == true || empty(i) == true)
+		return NULL;
+	if (detect(head(i), l) == false)
+	{
+		fprintf(stderr, "\nElemento non nella lista, impossibile identificare l'oggetto precedente;\n");
+		return NULL;
+	}
+	while (empty(l) == false)
+		if (tail(l) == i)
+			return l;
+		else
+			l = tail(l);
+	return NULL; //Arriva qui solo in caso l'elemento di cui si cerca il precedente, sia il primo elemento della lista;
+}
+
 list search_and_destroy(element e, list l)
 {
 	list r = l;
@@ -87,7 +124,10 @@ list search_and_destroy(element e, list l)
 		return l;
 	list tmp = l;
 	if (IsEqual(head(l), e) == true)
-		return DelFirst(l);
+	{
+		l = DelFirst(l);
+		return l;
+	}
 	while (llenght(l) != 1)
 	{
 		if (IsEqual(head(tail(l)), e) == true)
@@ -108,6 +148,8 @@ list DelFirst(list l)
 	list next = tail(l);
 	DeleteElement(head(l));
 	free(l);
+	SetRoot(next, next);
+	
 	return next;
 }
 
@@ -134,10 +176,7 @@ list Del(list l, item *ToDelete)
 void pop(list l, size_t element_n)
 {
 	if (element_n == 0)														//This function cannot delete the first element because it doesn't have return, so we would lost all the list;
-	{
-		fprintf(stderr, "To delete the first element use DelFirst function!");
-		abort();
-	}
+		DelFirst(l);
 
 	if (element_n > llenght(l)) {
 		fprintf(stderr, "Tryng to delete an element outside the list!");
@@ -181,6 +220,7 @@ list append(list l1, list l2)
 		l1 = tail(l1);
 	}
 	l1->next = l2;
+	SetRoot(l2, r);
 	return r;
 }
 
@@ -193,6 +233,7 @@ list AppendElement(element e, list l)
 		l = tail(l);
 	list c = cons(e);
 	l->next = c;
+	l->root = r->root;
 	return r;
 }
 
@@ -200,16 +241,15 @@ list NoRepetition(list l)
 {
 	list r = l;
 	bool firstEl = true;
-	while (empty(l) == false)
+	while (l->next != NULL)
 	{
 		if (detect(head(l), l) == true)
 		{
 			if (detect(head(l), tail(l)))
-			{	
+			{
+				l = search_and_destroy(head(l), l);
 				if (firstEl == true)
-					r = DelFirst(l);
-				else
-					l = search_and_destroy(head(l), r);
+					r = l;
 			}
 			else
 				firstEl = false;
@@ -344,10 +384,24 @@ void bubble_sort(list l)
 	} while (inorder == false);											//Do these operations untill the list is not in order;
 }
 
+void reverse(list l)
+{
+	if (empty(l))
+		return;
+	swap(l, last(l));
+	list x = prev(l, last(l));
+	list lst = last(l);
+	if(x != NULL)
+		x->next = NULL;
+	reverse(tail(l));
+	if (x != NULL)
+		x->next = lst;
+}
+
 void swap(item *a, item *b)
 {
 	element tmp;
-	tmp.type = a->value.type;
+	tmp.type = b->value.type;
 	AssignElement(&tmp, a->value);
 	AssignElement(&a->value, b->value);
 	AssignElement(&b->value, tmp);

@@ -116,9 +116,17 @@ bool AssignElement(element *dst, element src)
 		fprintf(stderr, "Tentativo di assegnamento tra tipi di dato differenti!\n");
 		return false;
 	}
-	
-	*dst = src;
 
+	switch (src.type)
+	{
+	case string_element:
+		strcpy(dst->value, src.value);
+		
+	default:
+		*dst = src;
+		break;
+	}
+	dst->type = src.type;
 	return true;
 }
 

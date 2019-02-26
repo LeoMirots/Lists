@@ -1,11 +1,10 @@
+#include "el.h"
 #include "list.h"
 
-/*Per il test crea una lista con i primi 10 numeri;*/
-
-/*Nel file.txt delle persone non ci devono essere spazi nella stringa di un campo solo, gli spazi separano i campi;*/
-
-int main(void)
+void test_liste()
 {
+	//This function is created to test and show usage of list.h library;
+
 	int ctrl = 0;
 	size_t size1 = 0;
 	unsigned int *v = malloc(sizeof(unsigned int));
@@ -25,12 +24,11 @@ int main(void)
 			break;
 	}
 	--size1;
-	element x = build_element(&v[0], uint_element);
+	element x = { &v[0], int_element };
 	list l1 = cons(x);
 	if (l1 == NULL)
 	{
 		printf("Ci sono stati dei problemi nel creare la lista;\n");
-		return EXIT_FAILURE;
 	}
 	if (size1 > 1)
 		for (size_t i = 1; i < size1; ++i)
@@ -38,26 +36,38 @@ int main(void)
 			x.value = &v[i];
 			l1 = AppendElement(x, l1);
 		}
-	DeleteElement(x);
-
 	PrintList(l1);
+	bubble_sort(l1);
+	PrintList(l1);
+
+	reverse(l1);
+	PrintList(l1);
+	
 	unsigned int n = 5;
-	element t = build_element(&n, uint_element);
+	element t = { &n, int_element };
+	list check = cons(t);
+	PrintElement(t);
+	n = 4;
+	PrintElement(t);
+	PrintList(check);
+	n = 5;
+
 	item *z = search(t, l1);
-	PrintElement(z->value);
+	//PrintElement(z->value);
 	search_and_destroy(t, l1);
-	DeleteElement(t);
+	PrintList(l1);
 
 	n = 4;
-	element t1 = build_element(&n, uint_element);
+	element t1 = { &n, int_element };
 	bool test = detect(t1, l1);
 	item *toErase = search(t1, l1);
-	Del(toErase);
+	Del(l1, toErase);
+	PrintList(l1);
+	insord(t1, l1);
 	PrintList(l1);
 
 
 	l1 = insert(t1, l1);
-	DeleteElement(t1);
 	PrintList(l1);
 	element h = head(l1);
 	PrintElement(h);
@@ -65,39 +75,72 @@ int main(void)
 	PrintList(l1);
 	PrintElement(MaxValue(l1));
 	PrintElement(MinValue(l1));
+	PrintList(l1->root);
 
 	list lp = empty_list();
-	Persona *tmp = malloc(sizeof(Persona));
-	FILE *f = fopen("Persone.txt", "rt");
-	if (f == NULL)
-	{
-		fprintf(stderr, "Errore in apertura del file;\n");
-		return EXIT_FAILURE;
-	}
-	for (int ctrl = 0; ctrl != EOF;)
-	{
-		ctrl = fscanf(f, "%s,", &tmp->Nome);
-		fscanf(f, "%s", &tmp->Cognome);
-		fscanf(f, "%s", &tmp->CF);
-		fscanf(f, "%s", &tmp->Referto);
-		fscanf(f, "%d;\n", &tmp->CodiceAccesso);
-
-		if(ctrl != EOF)
-			lp = AppendElement(build_element(tmp, persona_element), lp); //Memory leak in this point: AppendElement e build_element creano entrambi una copia di tmp, una è superflua e andrebbe eliminata;
-	}
-	fclose(f);
+	Struct *tmp = malloc(sizeof(Struct));
+	printf("\nInserisci la struct:\n");
+	//for (int ctrl = 0; ctrl != EOF;)
+	//{
+		ctrl = scanf("%s %s %s %d", &tmp->Nome, &tmp->CF, &tmp->Referto, &tmp->CodiceAccesso);
+		element zx = { tmp, struct_element };
+		lp = AppendElement(zx, lp);
+	//}
 	PrintList(lp);
-	swap(lp, tail(lp));
-	PrintList(lp);
+	l1 = DeleteAll(l1);
+	PrintList(l1);
+	return;
+}
 
-	string *str = malloc(sizeof(string));
-	char x[] = "Ciao";
-	str->s = x;
-	str->len = strlen(str->s);
-	element s = build_element(str, string_element);
-	list ls = cons(s);
-	DeleteElement(s);
-	PrintList(ls);
+int main(void)
+{
+	//This main is created to test an show usage of the el.h functions;
+
+	element e = { "Ciao come stai?", string_element };
+	PrintElement(e);
+	char a = '1';
+	unsigned char b = 2;
+	short c = 3;
+	unsigned short d = 4;
+	int ee = 5;
+	unsigned int f = 6;
+	float g = 7;
+	double h = 8;
+	element ch = { &a, char_element };
+	element uc = { &b, uchar_element };
+	element s = { &c, short_element };
+	element us = { &d, ushort_element };
+	element i = { &ee, int_element };
+	element ui = { &f, uint_element };
+	element fl = { &g, float_element };
+	element db = { &h, double_element };
+	
+	PrintElement(ch);
+	PrintElement(uc);
+	PrintElement(s);
+	PrintElement(us);
+	PrintElement(i);
+	PrintElement(ui);
+	PrintElement(fl);
+	PrintElement(db);
+	PrintElement(e);
+
+	int x = 3;
+	int x1 = 4;
+	int x2 = 2;
+	element uno = { &x, int_element };
+	element due = { &x, int_element };
+	bool controllo = IsEqual(uno, due);
+	uno.value = &x1;
+	controllo = IsEqual(uno, due);
+	int controllo1 = cmp(uno, due);
+	uno.value = &x2;
+	controllo1 = cmp(uno, due);
+	
+	element e2 = { "Ciao come stai?", string_element };
+	cmp(e, e2);
+	
+	test_liste();
 
 	system("PAUSE");
 	return EXIT_SUCCESS;
